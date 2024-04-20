@@ -65,7 +65,6 @@ import org.jboss.jandex.IndexView;
 import org.jboss.jandex.MethodInfo;
 import org.jboss.jandex.Type;
 import org.jboss.logging.Logger;
-import org.jboss.resteasy.reactive.RestEasyParamsFilter;
 import org.jboss.resteasy.reactive.common.core.Serialisers;
 import org.jboss.resteasy.reactive.common.core.SingletonBeanFactory;
 import org.jboss.resteasy.reactive.common.model.InjectableBean;
@@ -231,8 +230,6 @@ public class ResteasyReactiveProcessor {
             DotName.createSimple(RoutingContext.class.getName()));
     private static final DotName FILE = DotName.createSimple(File.class.getName());
     private static final DotName ENDPOINT_DISABLED = DotName.createSimple(EndpointDisabled.class.getName());
-    private static final DotName RESTEASY_PARAM_FILTER = DotName.createSimple(RestEasyParamsFilter.class.getName());
-
     private static final int SECURITY_EXCEPTION_MAPPERS_PRIORITY = Priorities.USER + 1;
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
@@ -415,7 +412,8 @@ public class ResteasyReactiveProcessor {
             List<ContextTypeBuildItem> contextTypeBuildItems,
             CompiledJavaVersionBuildItem compiledJavaVersionBuildItem,
             ResourceInterceptorsBuildItem resourceInterceptorsBuildItem,
-            Capabilities capabilities)
+            Capabilities capabilities,
+            ResteasyReactiveServerConfig serverConfig)
             throws NoSuchMethodException {
 
         if (!resourceScanningResultBuildItem.isPresent()) {
@@ -637,18 +635,8 @@ public class ResteasyReactiveProcessor {
                         }
                     });
 
-            for (AnnotationInstance ann : index.getAnnotations(RESTEASY_PARAM_FILTER)) {
-                Class<Predicate<Map<DotName, AnnotationInstance>>> predicate = loadClass(ann.target().asClass().name());
-                if (predicate == null) {
-                    break;
-                }
-                try {
-                    serverEndpointIndexerBuilder.setSkipMethodParameter(predicate.getDeclaredConstructor().newInstance());
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            }
+
+            serverConfig.skipAllNotMethodParameter().ifPresent(skip -> serverEndpointIndexerBuilder.skipAllNotMethodParameter(skip));
 
             if (!serverDefaultProducesHandlers.isEmpty()) {
                 List<DefaultProducesHandler> handlers = new ArrayList<>(serverDefaultProducesHandlers.size());

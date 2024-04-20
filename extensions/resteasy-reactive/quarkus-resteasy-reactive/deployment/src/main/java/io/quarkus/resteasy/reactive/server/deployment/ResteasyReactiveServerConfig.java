@@ -18,4 +18,5 @@ public interface ResteasyReactiveServerConfig {
      * This value is always resolved relative to {@code quarkus.http.root-path}.
      */
     Optional<String> path();
+    Optional<Boolean> skipAllNotMethodParameter();
 }

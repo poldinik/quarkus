@@ -1,82 +1,7 @@
 package org.jboss.resteasy.reactive.common.processor;
 
 import static java.util.Map.entry;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.BEAN_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.BIG_DECIMAL;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.BIG_INTEGER;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.BLOCKING;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.BOOLEAN;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.CHARACTER;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.COMPLETABLE_FUTURE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.COMPLETION_STAGE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.CONFIGURATION;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.CONSUMES;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.CONTEXT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.COOKIE_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.DEFAULT_VALUE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.DOUBLE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.DUMMY_ELEMENT_TYPE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.ENCODED;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.FLOAT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.FORM_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.HEADER_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.HTTP_HEADERS;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.INSTANT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.INTEGER;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.LIST;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.LOCAL_DATE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.LOCAL_DATE_TIME;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.LOCAL_TIME;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.LONG;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.MATRIX_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.MULTI;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.MULTI_PART_DATA_INPUT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.MULTI_PART_FORM_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.NON_BLOCKING;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.OBJECT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.OFFSET_DATE_TIME;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.OFFSET_TIME;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.OPTIONAL;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PATH;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PATH_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PATH_SEGMENT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PRIMITIVE_BOOLEAN;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PRIMITIVE_CHAR;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PRIMITIVE_DOUBLE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PRIMITIVE_FLOAT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PRIMITIVE_INTEGER;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PRIMITIVE_LONG;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PRODUCES;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.PROVIDERS;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.QUERY_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REQUEST;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.RESOURCE_CONTEXT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.RESOURCE_INFO;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.RESPONSE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_COOKIE_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_FORM_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_HEADER_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_MATRIX_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_MULTI;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_PATH_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_QUERY_PARAM;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_RESPONSE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_SSE_ELEMENT_TYPE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.REST_STREAM_ELEMENT_TYPE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.RUN_ON_VIRTUAL_THREAD;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.SECURITY_CONTEXT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.SERVER_REQUEST_CONTEXT;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.SET;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.SORTED_SET;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.SSE;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.SSE_EVENT_SINK;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.STRING;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.SUSPENDED;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.TRANSACTIONAL;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.UNI;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.URI_INFO;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.YEAR;
-import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.ZONED_DATE_TIME;
+import static org.jboss.resteasy.reactive.common.processor.ResteasyReactiveDotNames.*;
 
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
@@ -234,6 +159,7 @@ public abstract class EndpointIndexer<T extends EndpointIndexer<T, PARAM, METHOD
     private final Function<ClassInfo, Supplier<Boolean>> isDisabledCreator;
 
     private final Predicate<Map<DotName, AnnotationInstance>> skipMethodParameter;
+    private final boolean skipAllNotMethodParameter;
     private SerializerScanningResult serializerScanningResult;
 
     protected EndpointIndexer(Builder<T, ?, METHOD> builder) {
@@ -259,6 +185,7 @@ public abstract class EndpointIndexer<T extends EndpointIndexer<T, PARAM, METHOD
         this.targetJavaVersion = builder.targetJavaVersion;
         this.isDisabledCreator = builder.isDisabledCreator;
         this.skipMethodParameter = builder.skipMethodParameter;
+        this.skipAllNotMethodParameter = builder.skipAllNotMethodParameter;
     }
 
     public Optional<ResourceClass> createEndpoints(ClassInfo classInfo, boolean considerApplication) {
@@ -572,8 +499,7 @@ public abstract class EndpointIndexer<T extends EndpointIndexer<T, PARAM, METHOD
                 boolean encoded = anns.containsKey(ENCODED);
                 Type paramType = currentMethodInfo.parameterType(i);
                 String errorLocation = "method " + currentMethodInfo + " on class " + currentMethodInfo.declaringClass();
-
-                if (skipParameter(anns)) {
+                if (skipClientParameter(anns) || skipServerParameter(skipAllNotMethodParameter).apply(anns)) {
                     parameterResult = createIndexedParam()
                             .setCurrentClassInfo(currentClassInfo)
                             .setActualEndpointInfo(actualEndpointInfo)
@@ -771,7 +697,20 @@ public abstract class EndpointIndexer<T extends EndpointIndexer<T, PARAM, METHOD
         }
     }
 
-    protected boolean skipParameter(Map<DotName, AnnotationInstance> anns) {
+    private Function<Map<DotName, AnnotationInstance>, Boolean> skipServerParameter(boolean skipAllNotMethodParameter) {
+        return new Function<Map<DotName, AnnotationInstance>, Boolean>() {
+            @Override
+            public Boolean apply(Map<DotName, AnnotationInstance> anns) {
+                if(skipAllNotMethodParameter){
+                    return JAX_RS_ANNOTATIONS_FOR_FIELDS.stream()
+                                    .noneMatch(dotName -> anns.containsKey(dotName));
+                }
+                return false;
+            }
+        };
+    }
+
+    protected boolean skipClientParameter(Map<DotName, AnnotationInstance> anns) {
         return skipMethodParameter != null && skipMethodParameter.test(anns);
     }
 
@@ -1667,6 +1606,7 @@ public abstract class EndpointIndexer<T extends EndpointIndexer<T, PARAM, METHOD
         private Function<ClassInfo, Supplier<Boolean>> isDisabledCreator = null;
 
         private Predicate<Map<DotName, AnnotationInstance>> skipMethodParameter = null;
+        private boolean skipAllNotMethodParameter = false;
 
         public B setMultipartReturnTypeIndexerExtension(MultipartReturnTypeIndexerExtension multipartReturnTypeHandler) {
             this.multipartReturnTypeIndexerExtension = multipartReturnTypeHandler;
@@ -1787,6 +1727,11 @@ public abstract class EndpointIndexer<T extends EndpointIndexer<T, PARAM, METHOD
         public B setSkipMethodParameter(
                 Predicate<Map<DotName, AnnotationInstance>> skipMethodParameter) {
             this.skipMethodParameter = skipMethodParameter;
+            return (B) this;
+        }
+
+        public B skipAllNotMethodParameter(boolean skipAllNotMethodParameter){
+            this.skipAllNotMethodParameter = skipAllNotMethodParameter;
             return (B) this;
         }
 
